@@ -43,7 +43,7 @@ module.exports = function (module) {
                 return;
             }
             value = helpers_1.default.valueToString(value);
-            yield module.client.db().collection('objects').deleteMany({ _key: { $in: keys }, value: value });
+            yield module.client.collection('objects').deleteMany({ _key: { $in: keys }, value: value });
         });
     };
     module.sortedSetsRemoveRangeByScore = function (keys, min, max) {
