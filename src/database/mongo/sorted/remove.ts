@@ -14,7 +14,7 @@ interface Query {
     score?: { $gte?: number; $lte?: number };
 }
 
-export default function (module: Module) {
+export = function (module: Module) {
     module.sortedSetRemove = async function (key: string | string[], value: string | string[]) {
         // Check if key is valid
         if (!key) {

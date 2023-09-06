@@ -11,9 +11,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 const helpers_1 = __importDefault(require("../helpers"));
-function default_1(module) {
+module.exports = function (module) {
     module.sortedSetRemove = function (key, value) {
         return __awaiter(this, void 0, void 0, function* () {
             // Check if key is valid
@@ -76,5 +75,4 @@ function default_1(module) {
             yield bulk.execute();
         });
     };
-}
-exports.default = default_1;
+};
