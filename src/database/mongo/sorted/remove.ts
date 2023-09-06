@@ -14,6 +14,7 @@ interface Query {
     score?: { $gte?: number; $lte?: number };
 }
 
+// export default function (module: Module)
 export = function (module: Module) {
     module.sortedSetRemove = async function (key: string | string[], value: string | string[]) {
         // Check if key is valid
@@ -45,7 +46,7 @@ export = function (module: Module) {
         }
         value = helpers.valueToString(value);
 
-        await module.client.db().collection('objects').deleteMany({ _key: { $in: keys }, value: value });
+        await module.client.collection('objects').deleteMany({ _key: { $in: keys }, value: value });
     };
 
     module.sortedSetsRemoveRangeByScore = async function (keys: string[], min: string, max: string) {
