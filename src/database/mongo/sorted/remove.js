@@ -32,7 +32,7 @@ function default_1(module) {
             else { // Val not arr
                 value = helpers_1.default.valueToString(value);
             }
-            yield module.client.collection('objects').deleteMany({
+            yield module.client.db().collection('objects').deleteMany({
                 _key: Array.isArray(key) ? { $in: key } : key,
                 value: isValueArray ? { $in: value } : value,
             });
@@ -44,7 +44,7 @@ function default_1(module) {
                 return;
             }
             value = helpers_1.default.valueToString(value);
-            yield module.client.collection('objects').deleteMany({ _key: { $in: keys }, value: value });
+            yield module.client.db().collection('objects').deleteMany({ _key: { $in: keys }, value: value });
         });
     };
     module.sortedSetsRemoveRangeByScore = function (keys, min, max) {
@@ -63,7 +63,7 @@ function default_1(module) {
                 query.score = query.score || {};
                 query.score.$lte = parseFloat(max);
             }
-            yield module.client.collection('objects').deleteMany(query);
+            yield module.client.db().collection('objects').deleteMany(query);
         });
     };
     module.sortedSetRemoveBulk = function (data) {
@@ -71,7 +71,7 @@ function default_1(module) {
             if (!Array.isArray(data) || !data.length) {
                 return;
             }
-            const bulk = module.client.collection('objects').initializeUnorderedBulkOp();
+            const bulk = module.client.db().collection('objects').initializeUnorderedBulkOp();
             data.forEach(item => bulk.find({ _key: item[0], value: String(item[1]) }).delete());
             yield bulk.execute();
         });
