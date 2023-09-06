@@ -1,7 +1,7 @@
 import helpers from '../helpers';
 import { MongoClient } from 'mongodb';
 
-interface module {
+interface Module {
     client: MongoClient;
     sortedSetRemove: (key: string | string[], value: string | string[]) => Promise<void>;
     sortedSetsRemove: (keys: string[], value: string) => Promise<void>;
@@ -9,7 +9,12 @@ interface module {
     sortedSetRemoveBulk: (data: [string, string][]) => Promise<void>;
 }
 
-export default function (module: module) {
+interface Query {
+    _key: string | { $in: string[] };
+    score?: { $gte?: number; $lte?: number };
+}
+
+export default function (module: Module) {
     module.sortedSetRemove = async function (key: string | string[], value: string | string[]) {
         // Check if key is valid
         if (!key) {
@@ -47,7 +52,7 @@ export default function (module: module) {
         if (!Array.isArray(keys) || !keys.length) {
             return;
         }
-        const query : any = { _key: { $in: keys } };
+        const query: Query = { _key: { $in: keys } };
         if (keys.length === 1) {
             query._key = keys[0];
         }
