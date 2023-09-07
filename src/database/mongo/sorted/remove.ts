@@ -1,4 +1,4 @@
-import { MongoClient, Db } from 'mongodb';
+import { Db } from 'mongodb'; // reference 'mongodb.d.ts'
 import helpers from '../helpers';
 
 interface Module {
@@ -9,6 +9,7 @@ interface Module {
     sortedSetRemoveBulk: (data: [string, string][]) => Promise<void>;
 }
 
+// Based on types defined in the sortedSetsRemoveRangeByScore
 interface Query {
     _key: string | { $in: string[] };
     score?: { $gte?: number; $lte?: number };
